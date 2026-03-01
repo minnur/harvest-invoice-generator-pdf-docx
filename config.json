@@ -1,0 +1,32 @@
+{
+  "rate": 12.34,
+  "output_prefix": "Firstname-Lastname-invoice",
+  "sender": {
+    "name": "My Name",
+    "address": [
+      "address line 1",
+      "address line 2"
+    ],
+    "email": "myname@example.com"
+  },
+  "invoice": {
+    "date": "March 1, 2026",
+    "number": "2026-1",
+    "for": "Contractor services"
+  },
+  "bill_to": {
+    "company": [
+      "Company name 1",
+      "line 2"
+    ],
+    "address": [
+      "Company address 1,",
+      "line 2"
+    ]
+  },
+  "footer": {
+    "payable_to": "My Name",
+    "contact_name": "My Name",
+    "contact_info": "(213) 304-7627, myname@example.com"
+  }
+}
