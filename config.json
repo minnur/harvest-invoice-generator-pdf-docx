@@ -1,6 +1,7 @@
 {
   "rate": 12.34,
   "output_dir": "",
+  "template": "",
   "csv_columns": {
     "date": 0,
     "project_code": 3,

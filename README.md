@@ -1,14 +1,33 @@
 # Invoice Generator
 
-Generates professional invoices (DOCX + PDF) from Harvest time-tracking CSV exports. Supports both single-file and batch mode with automatic invoice numbering based on CSV date ranges.
+Generates professional invoices (DOCX + PDF) from Harvest time-tracking CSV exports. Uses a DOCX template for layout/styling and injects data via [docxtpl](https://docxtpl.readthedocs.io/). Supports both single-file and batch mode with automatic invoice numbering based on CSV date ranges.
 
 ## Prerequisites
 
 ```
-pip install python-docx
+pip install docxtpl docxcompose
 ```
 
 macOS is required for PDF generation (uses Pages via AppleScript).
+
+## Template Setup
+
+Generate the default template (one-time):
+
+```bash
+python3 create_template.py
+```
+
+This creates `templates/invoice-default.docx`. You can then open it in Word or Pages to customize:
+
+- Page margins, fonts, colors
+- "INVOICE" title styling
+- Header table layout (sender/recipient info)
+- Footer paragraph styling
+
+The template uses Jinja2 placeholders (`{{r left_header }}`, `{{p itemized_table }}`, `{{ payable_to }}`, etc.) that get replaced with data at generation time. The itemized line-items table (headers, data rows, summary rows) is built entirely in Python and injected as a subdocument.
+
+To use a custom template per client, set the `template` field in their config JSON to the path of their template DOCX.
 
 ## Configuration
 
@@ -18,6 +37,7 @@ Edit `config.json` (or a client-specific config) to set invoice details:
 |---|---|
 | `rate` | Hourly rate |
 | `output_dir` | Output directory for generated files (empty = same directory as the CSV input) |
+| `template` | Path to a custom template DOCX (empty = default `templates/invoice-default.docx`) |
 | `csv_columns` | Harvest CSV column indices: `date`, `project_code`, `notes`, `hours`, `ref_url` |
 | `sender` | Your name, address, and email |
 | `invoice.date` | Invoice date (single-file mode only; batch mode derives this from filenames) |
@@ -32,6 +52,7 @@ Example `config.json`:
 {
   "rate": 12.34,
   "output_dir": "/Users/myname/Invoices/ClientName/Invoices",
+  "template": "",
   "csv_columns": {
     "date": 0,
     "project_code": 3,
@@ -135,7 +156,10 @@ Organize invoices per client with separate directories for CSV exports and gener
 Invoices/
 ├── Generator/
 │   ├── generate_invoice.py
-│   └── config.json              # default/template config
+│   ├── create_template.py
+│   ├── config.json              # default/template config
+│   └── templates/
+│       └── invoice-default.docx     # default template
 │
 ├── ClientA/
 │   ├── clienta.json             # client-specific config
