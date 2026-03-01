@@ -5,8 +5,13 @@ Generates professional invoices (DOCX + PDF) from Harvest time-tracking CSV expo
 ## Prerequisites
 
 ```
-pip install docxtpl docxcompose
+pip install docxtpl
 ```
+
+| Package | Purpose |
+|---|---|
+| [docxtpl](https://pypi.org/project/docxtpl/) | Jinja2 template rendering for DOCX files |
+| [python-docx](https://pypi.org/project/python-docx/) | DOCX document creation (installed with docxtpl) |
 
 macOS is required for PDF generation (uses Pages via AppleScript).
 
