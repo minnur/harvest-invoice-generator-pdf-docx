@@ -10,22 +10,16 @@ pip install docxtpl docxcompose
 
 macOS is required for PDF generation (uses Pages via AppleScript).
 
-## Template Setup
+## Template
 
-Generate the default template (one-time):
-
-```bash
-python3 create_template.py
-```
-
-This creates `templates/invoice-default.docx`. You can then open it in Word or Pages to customize:
+The default template is `templates/invoice-default.docx`. You can open it in Word or Pages to customize:
 
 - Page margins, fonts, colors
 - "INVOICE" title styling
 - Header table layout (sender/recipient info)
 - Footer paragraph styling
 
-The template uses Jinja2 placeholders (`{{r left_header }}`, `{{p itemized_table }}`, `{{ payable_to }}`, etc.) that get replaced with data at generation time. The itemized line-items table (headers, data rows, summary rows) is built entirely in Python and injected as a subdocument.
+The template uses Jinja2 placeholders (`{{r left_header }}`, `{{ itemized_table }}`, `{{ payable_to }}`, etc.) that get replaced with data at generation time. The itemized line-items table (headers, data rows, summary rows) is built entirely in Python.
 
 To use a custom template per client, set the `template` field in their config JSON to the path of their template DOCX.
 
@@ -156,7 +150,6 @@ Organize invoices per client with separate directories for CSV exports and gener
 Invoices/
 ├── Generator/
 │   ├── generate_invoice.py
-│   ├── create_template.py
 │   ├── config.json              # default/template config
 │   └── templates/
 │       └── invoice-default.docx     # default template
